@@ -3,623 +3,522 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Từ vựng Tiếng Anh C1/C2</title>
+<title>LexiC1/C2 — Từ vựng Tiếng Anh Nâng Cao</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+:root {
+  --ink: #0f0e0c;
+  --paper: #f7f5f0;
+  --cream: #ede9e0;
+  --gold: #c9a84c;
+  --gold-light: #f0e4c0;
+  --gold-dark: #8a6e2f;
+  --green: #2d5a3d;
+  --green-light: #e8f0eb;
+  --red: #8b2e2e;
+  --red-light: #f5e8e8;
+  --blue: #1e3a5f;
+  --blue-light: #e8eef5;
+  --muted: #7a7670;
+  --border: #ddd9d0;
+  --card-bg: #ffffff;
+  --shadow: 0 2px 20px rgba(15,14,12,0.08);
+  --shadow-hover: 0 8px 40px rgba(15,14,12,0.15);
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Segoe UI', Arial, sans-serif; background: #f5f5f0; color: #1a1a1a; min-height: 100vh; }
 
-.header { background: #1a1a2e; color: white; padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-.header h1 { font-size: 22px; font-weight: 600; }
-.header p { font-size: 13px; opacity: 0.7; margin-top: 4px; }
-.badge { background: #4CAF50; color: white; font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 600; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  line-height: 1.6;
+}
 
-.controls { background: white; border-bottom: 1px solid #e8e8e0; padding: 1rem 2rem; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-.search-wrap { position: relative; flex: 1; min-width: 200px; }
-.search-wrap input { width: 100%; padding: 8px 12px 8px 36px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; }
-.search-wrap input:focus { border-color: #1a1a2e; }
-.search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #999; font-size: 16px; }
-select { padding: 8px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; background: white; outline: none; cursor: pointer; }
-.btn-mode { padding: 8px 16px; border: 1px solid #1a1a2e; border-radius: 8px; font-size: 13px; cursor: pointer; background: white; transition: all 0.2s; }
-.btn-mode.active { background: #1a1a2e; color: white; }
+/* HEADER */
+.header {
+  background: var(--ink);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid var(--gold);
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+}
+.logo span { color: #fff; font-size: 13px; font-family: 'DM Sans', sans-serif; display: block; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; margin-top: -4px; }
+.header-right { display: flex; align-items: center; gap: 12px; }
+.pill { font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 600; letter-spacing: 0.05em; }
+.pill-c1 { background: var(--blue-light); color: var(--blue); }
+.pill-c2 { background: var(--red-light); color: var(--red); }
 
-.stats { display: flex; gap: 8px; padding: 1rem 2rem; background: white; border-bottom: 1px solid #e8e8e0; flex-wrap: wrap; }
-.stat { background: #f5f5f0; border-radius: 8px; padding: 6px 14px; font-size: 12px; color: #555; }
-.stat span { font-weight: 600; color: #1a1a2e; }
+/* STATS BAR */
+.statsbar {
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
+  padding: 0.6rem 2rem;
+  display: flex;
+  gap: 1.5rem;
+  font-size: 12px;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+.statsbar strong { color: var(--ink); font-weight: 600; }
 
-.main { padding: 1.5rem 2rem; max-width: 1200px; margin: 0 auto; }
+/* CONTROLS */
+.controls {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 2rem;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.search-wrap { position: relative; flex: 1; min-width: 220px; }
+.search-wrap input {
+  width: 100%;
+  padding: 9px 14px 9px 38px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--paper);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-wrap input:focus { border-color: var(--gold); background: #fff; }
+.search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 15px; }
+.ctrl-select {
+  padding: 9px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  outline: none;
+  cursor: pointer;
+}
+.mode-btn {
+  padding: 9px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  background: var(--paper);
+  color: var(--muted);
+  transition: all 0.2s;
+  font-weight: 500;
+}
+.mode-btn.active { background: var(--ink); color: var(--gold); border-color: var(--ink); }
 
+/* LOOKUP BAR */
+.lookup-bar {
+  background: linear-gradient(135deg, #1a1a0f 0%, #0f0e0c 100%);
+  padding: 1.25rem 2rem;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-bottom: 1px solid var(--gold-dark);
+}
+.lookup-bar input {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1.5px solid var(--gold-dark);
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: 'DM Mono', monospace;
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  outline: none;
+  transition: all 0.2s;
+}
+.lookup-bar input::placeholder { color: rgba(255,255,255,0.3); }
+.lookup-bar input:focus { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+.lookup-btn {
+  padding: 10px 20px;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.lookup-btn:hover { background: #d4b055; transform: translateY(-1px); }
+.lookup-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.lookup-label { color: rgba(255,255,255,0.6); font-size: 12px; white-space: nowrap; letter-spacing: 0.05em; text-transform: uppercase; }
+
+/* RESULT CARD */
+.result-area { padding: 1.5rem 2rem; max-width: 860px; }
+.result-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  border: 1.5px solid var(--gold);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  animation: slideIn 0.3s ease;
+}
+@keyframes slideIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+.result-header {
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, var(--gold-light), #fff8e8);
+  border-bottom: 1px solid var(--gold-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.result-word { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--ink); }
+.result-phonetic { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--muted); margin-top: 2px; }
+.result-badges { display: flex; gap: 6px; }
+.result-body { padding: 1.25rem 1.5rem; }
+.loading-dots { display: flex; gap: 6px; align-items: center; padding: 1rem 0; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); animation: bounce 1.2s infinite; }
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce { 0%,80%,100% { transform: scale(0.8); opacity: 0.5; } 40% { transform: scale(1.2); opacity: 1; } }
+
+/* WORD GRID */
+.main { padding: 1.5rem 2rem; }
 .word-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
 
-.word-card { background: white; border-radius: 12px; border: 1px solid #e8e8e0; overflow: hidden; transition: box-shadow 0.2s; }
-.word-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.word-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: all 0.25s;
+  cursor: default;
+}
+.word-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); border-color: var(--gold); }
 
-.card-header { padding: 1rem 1.25rem 0.75rem; border-bottom: 1px solid #f0f0e8; display: flex; justify-content: space-between; align-items: flex-start; }
-.word-main { flex: 1; }
-.word-en { font-size: 20px; font-weight: 600; color: #1a1a2e; }
-.word-phonetic { font-size: 13px; color: #888; margin-top: 2px; font-style: italic; }
-.word-vi { font-size: 14px; color: #2e7d32; font-weight: 500; margin-top: 4px; }
-.level-badge { font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600; white-space: nowrap; }
-.level-c1 { background: #e3f2fd; color: #1565c0; }
-.level-c2 { background: #fce4ec; color: #880e4f; }
+.card-top {
+  padding: 1rem 1.25rem 0.75rem;
+  border-bottom: 1px solid var(--cream);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.card-word { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--ink); }
+.card-phonetic { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); margin-top: 2px; }
+.card-vi-short { font-size: 13px; color: var(--green); font-weight: 500; margin-top: 4px; }
+.lv-badge { font-size: 10px; padding: 3px 8px; border-radius: 6px; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap; }
+.lv-c1 { background: var(--blue-light); color: var(--blue); }
+.lv-c2 { background: var(--red-light); color: var(--red); }
 
-.meanings { padding: 0.75rem 1.25rem; }
-.meaning-item { margin-bottom: 0.75rem; }
-.meaning-item:last-child { margin-bottom: 0; }
-.pos-tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 600; margin-bottom: 4px; }
-.pos-n { background: #fff3e0; color: #e65100; }
-.pos-v { background: #e8f5e9; color: #2e7d32; }
-.pos-adj { background: #e8eaf6; color: #283593; }
-.pos-adv { background: #fce4ec; color: #880e4f; }
-.pos-phrase { background: #f3e5f5; color: #6a1b9a; }
+.card-meanings { padding: 0.75rem 1.25rem; }
+.meaning-block { margin-bottom: 0.75rem; }
+.meaning-block:last-child { margin-bottom: 0; }
+.pos-tag {
+  display: inline-block;
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+.pt-n { background: #fff3e0; color: #bf360c; }
+.pt-v { background: var(--green-light); color: var(--green); }
+.pt-adj { background: var(--blue-light); color: var(--blue); }
+.pt-adv { background: var(--red-light); color: var(--red); }
+.pt-other { background: #f3e5f5; color: #6a1b9a; }
 
-.meaning-vi { font-size: 14px; color: #333; margin-bottom: 6px; }
-.examples { list-style: none; }
-.examples li { font-size: 13px; color: #555; padding: 4px 0 4px 12px; border-left: 2px solid #e0e0e0; margin-bottom: 4px; line-height: 1.5; }
-.examples li em { color: #1565c0; font-style: normal; font-weight: 500; }
-.examples li .vi-ex { display: block; color: #888; font-size: 12px; margin-top: 2px; }
+.meaning-vi { font-size: 13.5px; color: var(--ink); margin-bottom: 6px; font-weight: 500; }
+.ex-list { list-style: none; }
+.ex-list li {
+  font-size: 12.5px;
+  color: #555;
+  padding: 4px 0 4px 10px;
+  border-left: 2px solid var(--cream);
+  margin-bottom: 4px;
+  line-height: 1.55;
+}
+.ex-list li em { color: var(--blue); font-style: normal; font-weight: 600; }
+.ex-vi { display: block; color: var(--muted); font-size: 11.5px; margin-top: 2px; font-style: italic; }
 
-.card-footer { padding: 0.5rem 1.25rem; background: #fafaf8; border-top: 1px solid #f0f0e8; display: flex; gap: 8px; }
-.btn-learn { flex: 1; padding: 6px; border: 1px solid #ddd; border-radius: 6px; font-size: 12px; cursor: pointer; background: white; transition: all 0.2s; }
-.btn-learn:hover { background: #f5f5f0; }
-.btn-learn.mastered { background: #e8f5e9; border-color: #a5d6a7; color: #2e7d32; }
-.btn-learn.studying { background: #fff3e0; border-color: #ffcc80; color: #e65100; }
+.card-footer {
+  padding: 0.6rem 1.25rem;
+  background: var(--paper);
+  border-top: 1px solid var(--cream);
+  display: flex;
+  gap: 8px;
+}
+.btn-status {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  background: var(--card-bg);
+  color: var(--muted);
+  transition: all 0.2s;
+  font-weight: 500;
+}
+.btn-status:hover { background: var(--cream); }
+.btn-status.studying { background: #fff8e8; border-color: var(--gold); color: var(--gold-dark); }
+.btn-status.mastered { background: var(--green-light); border-color: #a5d6a7; color: var(--green); }
 
-.empty { text-align: center; padding: 3rem; color: #888; }
-.empty i { font-size: 48px; margin-bottom: 1rem; display: block; }
+/* FLASHCARD MODE */
+.fc-wrap { max-width: 600px; margin: 0 auto; padding: 2rem; display: none; }
+.fc-wrap.active { display: block; }
+.fc-progress-bar { height: 3px; background: var(--cream); border-radius: 2px; margin-bottom: 1.5rem; overflow: hidden; }
+.fc-progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
+.fc-counter { text-align: center; font-size: 13px; color: var(--muted); margin-bottom: 1rem; }
 
-/* Flashcard mode */
-.flashcard-mode { display: none; text-align: center; max-width: 600px; margin: 2rem auto; }
-.flashcard-mode.active { display: block; }
-.word-grid.hidden { display: none; }
+.fc-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  border: 1.5px solid var(--border);
+  padding: 2.5rem 2rem;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+.fc-card:hover { box-shadow: var(--shadow-hover); border-color: var(--gold); }
+.fc-word-big { font-family: 'Playfair Display', serif; font-size: 40px; color: var(--ink); margin-bottom: 6px; }
+.fc-phone { font-family: 'DM Mono', monospace; font-size: 14px; color: var(--muted); }
+.fc-lv { margin-top: 12px; }
+.fc-answer { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--cream); width: 100%; display: none; }
+.fc-answer.show { display: block; }
+.fc-vi-big { font-size: 18px; color: var(--green); font-weight: 600; margin-bottom: 10px; }
+.fc-ex-sample { font-size: 13px; color: var(--muted); font-style: italic; }
+.fc-tap { font-size: 12px; color: var(--gold); margin-top: 16px; letter-spacing: 0.05em; }
 
-.flashcard { background: white; border-radius: 16px; border: 1px solid #e8e8e0; padding: 2.5rem; min-height: 300px; display: flex; flex-direction: column; justify-content: center; cursor: pointer; transition: all 0.3s; }
-.flashcard:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-.fc-word { font-size: 36px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
-.fc-phonetic { font-size: 16px; color: #888; font-style: italic; }
-.fc-level { margin-top: 12px; }
-.fc-reveal { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #f0f0e8; display: none; }
-.fc-reveal.show { display: block; }
-.fc-vi { font-size: 20px; color: #2e7d32; font-weight: 600; margin-bottom: 1rem; }
-.fc-example { font-size: 14px; color: #555; font-style: italic; }
-.fc-nav { display: flex; gap: 12px; margin-top: 1.5rem; justify-content: center; }
-.fc-nav button { padding: 10px 24px; border-radius: 8px; border: 1px solid #ddd; cursor: pointer; font-size: 14px; transition: all 0.2s; }
-.fc-nav .btn-know { background: #e8f5e9; border-color: #a5d6a7; color: #2e7d32; }
-.fc-nav .btn-again { background: #fff3e0; border-color: #ffcc80; color: #e65100; }
-.fc-nav .btn-prev { background: white; }
-.fc-progress { font-size: 13px; color: #888; margin-bottom: 1rem; }
-.fc-hint { font-size: 13px; color: #bbb; margin-top: 1rem; }
+.fc-actions { display: flex; gap: 12px; margin-top: 1.25rem; }
+.fc-actions button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1.5px solid;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.fc-actions button:active { transform: scale(0.97); }
+.btn-again { background: var(--red-light); border-color: #f5a5a5; color: var(--red); }
+.btn-know { background: var(--green-light); border-color: #a5d6a7; color: var(--green); }
+.fc-nav { display: flex; gap: 10px; margin-top: 10px; justify-content: center; }
+.fc-nav button {
+  padding: 8px 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--paper);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+.fc-nav button:hover { background: var(--cream); }
+
+.empty-state { text-align: center; padding: 4rem 2rem; color: var(--muted); }
+.empty-state p { font-size: 15px; margin-top: 1rem; }
+
+/* MARKUP inside AI response */
+.ai-meaning { margin-bottom: 1rem; }
+.ai-meaning:last-child { margin-bottom: 0; }
+.ai-pos { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+.ai-vi { font-size: 15px; font-weight: 600; color: var(--green); margin-bottom: 8px; }
+.ai-examples { list-style: none; }
+.ai-examples li { font-size: 13.5px; color: #444; padding: 5px 0 5px 12px; border-left: 2px solid var(--gold-light); margin-bottom: 6px; line-height: 1.6; }
+.ai-examples li .vi { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; font-style: italic; }
+.ai-examples em { color: var(--blue); font-style: normal; font-weight: 600; }
+.err-msg { color: var(--red); font-size: 14px; padding: 1rem 0; }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--paper); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div>
-    <h1>📚 Từ vựng Tiếng Anh C1 / C2</h1>
-    <p>Học từ vựng nâng cao với nghĩa tiếng Việt và ví dụ theo từng loại từ</p>
+  <div class="logo">LexiC1/C2 <span>Từ vựng Tiếng Anh Nâng Cao</span></div>
+  <div class="header-right">
+    <span class="pill pill-c1">C1</span>
+    <span class="pill pill-c2">C2</span>
   </div>
-  <div style="display:flex; gap:8px; align-items:center;">
-    <span class="badge">C1</span>
-    <span class="badge" style="background:#e91e63;">C2</span>
-  </div>
+</div>
+
+<div class="lookup-bar">
+  <span class="lookup-label">🔎 Tra từ mới</span>
+  <input type="text" id="lookupInput" placeholder="Nhập bất kỳ từ tiếng Anh nào..." onkeydown="if(event.key==='Enter')lookupWord()">
+  <button class="lookup-btn" id="lookupBtn" onclick="lookupWord()">Tra từ với AI ✨</button>
+</div>
+
+<div class="result-area" id="resultArea" style="display:none;"></div>
+
+<div class="statsbar" id="statsbar">
+  <span>Tổng: <strong id="s-total">0</strong> từ</span>
+  <span>Hiển thị: <strong id="s-show">0</strong> từ</span>
+  <span>Đang học: <strong id="s-study">0</strong> từ</span>
+  <span>Đã thuộc: <strong id="s-master">0</strong> từ</span>
 </div>
 
 <div class="controls">
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
-    <input type="text" id="searchInput" placeholder="Tìm từ vựng..." oninput="filterWords()">
+    <input type="text" id="searchInput" placeholder="Tìm trong danh sách..." oninput="filterWords()">
   </div>
-  <select id="levelFilter" onchange="filterWords()">
+  <select class="ctrl-select" id="levelFilter" onchange="filterWords()">
     <option value="all">Tất cả cấp độ</option>
     <option value="C1">C1</option>
     <option value="C2">C2</option>
   </select>
-  <select id="posFilter" onchange="filterWords()">
+  <select class="ctrl-select" id="posFilter" onchange="filterWords()">
     <option value="all">Tất cả loại từ</option>
     <option value="noun">Danh từ (n)</option>
     <option value="verb">Động từ (v)</option>
     <option value="adjective">Tính từ (adj)</option>
     <option value="adverb">Trạng từ (adv)</option>
   </select>
-  <button class="btn-mode active" id="btnGrid" onclick="setMode('grid')">📋 Danh sách</button>
-  <button class="btn-mode" id="btnFlash" onclick="setMode('flash')">🃏 Flashcard</button>
+  <button class="mode-btn active" id="btnGrid" onclick="setMode('grid')">📋 Danh sách</button>
+  <button class="mode-btn" id="btnFlash" onclick="setMode('flash')">🃏 Flashcard</button>
 </div>
 
-<div class="stats" id="statsBar">
-  <div class="stat">Tổng: <span id="totalCount">0</span> từ</div>
-  <div class="stat">Đang hiển thị: <span id="showCount">0</span> từ</div>
-  <div class="stat">Đã thuộc: <span id="masteredCount">0</span> từ</div>
-  <div class="stat">Đang học: <span id="studyingCount">0</span> từ</div>
-</div>
-
-<div class="main">
+<div class="main" id="mainArea">
   <div class="word-grid" id="wordGrid"></div>
-  <div class="empty" id="emptyState" style="display:none;">
-    <i>🔍</i>
+  <div class="empty-state" id="emptyState" style="display:none;">
+    <div style="font-size:40px;">📭</div>
     <p>Không tìm thấy từ vựng phù hợp</p>
   </div>
+</div>
 
-  <div class="flashcard-mode" id="flashcardMode">
-    <div class="fc-progress" id="fcProgress">Từ 1 / 10</div>
-    <div class="flashcard" id="flashcard" onclick="revealCard()">
-      <div class="fc-word" id="fcWord">—</div>
-      <div class="fc-phonetic" id="fcPhonetic">—</div>
-      <div class="fc-level" id="fcLevel"></div>
-      <div class="fc-reveal" id="fcReveal">
-        <div class="fc-vi" id="fcVi"></div>
-        <div class="fc-example" id="fcExample"></div>
-      </div>
-      <div class="fc-hint" id="fcHint">👆 Nhấn để xem nghĩa</div>
+<div class="fc-wrap" id="fcWrap">
+  <div class="fc-progress-bar"><div class="fc-progress-fill" id="fcFill" style="width:0%"></div></div>
+  <div class="fc-counter" id="fcCounter">1 / 10</div>
+  <div class="fc-card" id="fcCard" onclick="revealFc()">
+    <div class="fc-word-big" id="fcWord"></div>
+    <div class="fc-phone" id="fcPhone"></div>
+    <div class="fc-lv" id="fcLv"></div>
+    <div class="fc-answer" id="fcAnswer">
+      <div class="fc-vi-big" id="fcViB"></div>
+      <div class="fc-ex-sample" id="fcExS"></div>
     </div>
-    <div class="fc-nav" id="fcNav" style="display:none;">
-      <button class="btn-again" onclick="markCard('again')">🔄 Học lại</button>
-      <button class="btn-know" onclick="markCard('know')">✅ Đã thuộc</button>
-    </div>
-    <div class="fc-nav">
-      <button class="btn-prev" onclick="prevCard()">← Trước</button>
-      <button class="btn-prev" onclick="nextCard()">Tiếp →</button>
-    </div>
+    <div class="fc-tap" id="fcTap">👆 Nhấn để xem nghĩa</div>
+  </div>
+  <div class="fc-actions" id="fcAct" style="display:none;">
+    <button class="btn-again" onclick="fcMark('again')">🔄 Học lại</button>
+    <button class="btn-know" onclick="fcMark('know')">✅ Đã thuộc</button>
+  </div>
+  <div class="fc-nav">
+    <button onclick="fcNav(-1)">← Trước</button>
+    <button onclick="fcNav(1)">Tiếp →</button>
   </div>
 </div>
 
 <script>
-const words = [
-  {
-    word: "ubiquitous",
-    phonetic: "/juːˈbɪk.wɪ.təs/",
-    level: "C1",
-    meanings: [
-      {
-        pos: "adjective",
-        posLabel: "adj",
-        vi: "Có mặt khắp nơi, phổ biến rộng rãi",
-        examples: [
-          { en: "Smartphones have become <em>ubiquitous</em> in modern society.", vi: "Điện thoại thông minh đã trở nên phổ biến khắp nơi trong xã hội hiện đại." },
-          { en: "The <em>ubiquitous</em> coffee shop can be found on every street corner.", vi: "Quán cà phê có mặt ở khắp nơi, từng góc phố đều có thể thấy." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "ambivalent",
-    phonetic: "/æmˈbɪv.ə.lənt/",
-    level: "C1",
-    meanings: [
-      {
-        pos: "adjective",
-        posLabel: "adj",
-        vi: "Lưỡng lự, có cảm xúc trái chiều, không chắc chắn",
-        examples: [
-          { en: "She felt <em>ambivalent</em> about accepting the job offer abroad.", vi: "Cô ấy cảm thấy lưỡng lự về việc chấp nhận công việc ở nước ngoài." },
-          { en: "Many voters remain <em>ambivalent</em> about the new policy.", vi: "Nhiều cử tri vẫn không chắc chắn về chính sách mới." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "meticulous",
-    phonetic: "/məˈtɪk.jʊ.ləs/",
-    level: "C1",
-    meanings: [
-      {
-        pos: "adjective",
-        posLabel: "adj",
-        vi: "Tỉ mỉ, cẩn thận, kỹ lưỡng đến từng chi tiết",
-        examples: [
-          { en: "She is <em>meticulous</em> about keeping financial records accurate.", vi: "Cô ấy rất tỉ mỉ trong việc giữ hồ sơ tài chính chính xác." },
-          { en: "The surgeon performed the operation with <em>meticulous</em> precision.", vi: "Bác sĩ phẫu thuật thực hiện ca mổ với độ chính xác kỹ lưỡng." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "eloquent",
-    phonetic: "/ˈel.ə.kwənt/",
-    level: "C1",
-    meanings: [
-      {
-        pos: "adjective",
-        posLabel: "adj",
-        vi: "Hùng hồn, ăn nói lưu loát, diễn đạt khéo léo",
-        examples: [
-          { en: "The lawyer delivered an <em>eloquent</em> closing argument.", vi: "Luật sư đưa ra lời biện hộ kết thúc hùng hồn." },
-          { en: "She was an <em>eloquent</em> speaker who captivated every audience.", vi: "Cô ấy là người nói chuyện lưu loát, thu hút mọi khán giả." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "pragmatic",
-    phonetic: "/præɡˈmæt.ɪk/",
-    level: "C1",
-    meanings: [
-      {
-        pos: "adjective",
-        posLabel: "adj",
-        vi: "Thực tế, thực dụng, tập trung vào kết quả thực tiễn",
-        examples: [
-          { en: "We need a <em>pragmatic</em> approach to solve this budget crisis.", vi: "Chúng ta cần cách tiếp cận thực tế để giải quyết khủng hoảng ngân sách này." },
-          { en: "A <em>pragmatic</em> manager focuses on results, not procedures.", vi: "Nhà quản lý thực dụng tập trung vào kết quả, không phải quy trình." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "scrutinize",
-    phonetic: "/ˈskruː.tɪ.naɪz/",
-    level: "C1",
-    meanings: [
-      {
-        pos: "verb",
-        posLabel: "verb",
-        vi: "Xem xét kỹ lưỡng, kiểm tra cặn kẽ",
-        examples: [
-          { en: "Auditors <em>scrutinized</em> every transaction in the financial report.", vi: "Kiểm toán viên xem xét kỹ lưỡng mọi giao dịch trong báo cáo tài chính." },
-          { en: "The committee will <em>scrutinize</em> the new proposal carefully.", vi: "Ủy ban sẽ kiểm tra cẩn thận đề xuất mới." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "mitigate",
-    phonetic: "/ˈmɪt.ɪ.ɡeɪt/",
-    level: "C1",
-    meanings: [
-      {
-        pos: "verb",
-        posLabel: "verb",
-        vi: "Giảm nhẹ, làm dịu bớt (rủi ro, tác hại)",
-        examples: [
-          { en: "Diversification helps <em>mitigate</em> financial risk in a portfolio.", vi: "Đa dạng hóa giúp giảm nhẹ rủi ro tài chính trong danh mục đầu tư." },
-          { en: "The company took steps to <em>mitigate</em> the environmental damage.", vi: "Công ty thực hiện các bước để giảm thiểu thiệt hại môi trường." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "proliferate",
-    phonetic: "/prəˈlɪf.ər.eɪt/",
-    level: "C1",
-    meanings: [
-      {
-        pos: "verb",
-        posLabel: "verb",
-        vi: "Sinh sôi nảy nở, lan rộng nhanh chóng, phát triển mạnh",
-        examples: [
-          { en: "Social media platforms have <em>proliferated</em> over the past decade.", vi: "Các nền tảng mạng xã hội đã phát triển mạnh trong thập kỷ qua." },
-          { en: "Fake news tends to <em>proliferate</em> during election periods.", vi: "Tin giả thường lan rộng trong giai đoạn bầu cử." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "anomaly",
-    phonetic: "/əˈnɒm.ə.li/",
-    level: "C1",
-    meanings: [
-      {
-        pos: "noun",
-        posLabel: "noun",
-        vi: "Sự bất thường, hiện tượng ngoại lệ, điều không theo quy luật",
-        examples: [
-          { en: "The spike in costs this month is a clear <em>anomaly</em> that needs investigation.", vi: "Sự tăng vọt chi phí tháng này là bất thường rõ ràng cần điều tra." },
-          { en: "Scientists detected an <em>anomaly</em> in the patient's test results.", vi: "Các nhà khoa học phát hiện bất thường trong kết quả xét nghiệm của bệnh nhân." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "discrepancy",
-    phonetic: "/dɪˈskrep.ən.si/",
-    level: "C1",
-    meanings: [
-      {
-        pos: "noun",
-        posLabel: "noun",
-        vi: "Sự chênh lệch, mâu thuẫn giữa hai số liệu hoặc tuyên bố",
-        examples: [
-          { en: "There is a significant <em>discrepancy</em> between the actual and budgeted costs.", vi: "Có sự chênh lệch đáng kể giữa chi phí thực tế và ngân sách." },
-          { en: "The auditor found a <em>discrepancy</em> in the inventory records.", vi: "Kiểm toán viên phát hiện mâu thuẫn trong hồ sơ tồn kho." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "pertinent",
-    phonetic: "/ˈpɜː.tɪ.nənt/",
-    level: "C1",
-    meanings: [
-      {
-        pos: "adjective",
-        posLabel: "adj",
-        vi: "Liên quan, thích hợp, đúng trọng tâm",
-        examples: [
-          { en: "Please only raise <em>pertinent</em> questions during the meeting.", vi: "Vui lòng chỉ đặt câu hỏi liên quan trong cuộc họp." },
-          { en: "She made several <em>pertinent</em> observations about the cost structure.", vi: "Cô ấy đưa ra một số nhận xét thích hợp về cấu trúc chi phí." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "lucrative",
-    phonetic: "/ˈluː.krə.tɪv/",
-    level: "C1",
-    meanings: [
-      {
-        pos: "adjective",
-        posLabel: "adj",
-        vi: "Có lợi nhuận cao, sinh lời nhiều, béo bở",
-        examples: [
-          { en: "The contract proved to be extremely <em>lucrative</em> for the company.", vi: "Hợp đồng được chứng minh là cực kỳ có lợi nhuận cho công ty." },
-          { en: "She left her job for a more <em>lucrative</em> opportunity in finance.", vi: "Cô ấy rời công việc để theo đuổi cơ hội sinh lời hơn trong lĩnh vực tài chính." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "ephemeral",
-    phonetic: "/ɪˈfem.ər.əl/",
-    level: "C2",
-    meanings: [
-      {
-        pos: "adjective",
-        posLabel: "adj",
-        vi: "Chỉ tồn tại trong thời gian ngắn, phù du, thoáng qua",
-        examples: [
-          { en: "The beauty of cherry blossoms is <em>ephemeral</em> — they last only a week.", vi: "Vẻ đẹp của hoa anh đào thật phù du — chỉ kéo dài một tuần." },
-          { en: "Fame in the social media age is often <em>ephemeral</em>.", vi: "Danh tiếng trong thời đại mạng xã hội thường rất thoáng qua." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "obfuscate",
-    phonetic: "/ˈɒb.fʌs.keɪt/",
-    level: "C2",
-    meanings: [
-      {
-        pos: "verb",
-        posLabel: "verb",
-        vi: "Làm rối, làm mờ, cố tình làm khó hiểu",
-        examples: [
-          { en: "The politician used jargon to <em>obfuscate</em> the real issues.", vi: "Chính trị gia dùng thuật ngữ chuyên ngành để làm mờ các vấn đề thực sự." },
-          { en: "Complex financial instruments can <em>obfuscate</em> actual risk levels.", vi: "Các công cụ tài chính phức tạp có thể làm rối mức độ rủi ro thực tế." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "sycophant",
-    phonetic: "/ˈsɪk.ə.fænt/",
-    level: "C2",
-    meanings: [
-      {
-        pos: "noun",
-        posLabel: "noun",
-        vi: "Kẻ nịnh hót, người tâng bốc để đạt lợi ích cá nhân",
-        examples: [
-          { en: "The CEO surrounded himself with <em>sycophants</em> who never challenged his ideas.", vi: "Giám đốc điều hành bao quanh mình bằng những kẻ nịnh hót, không bao giờ thách thức ý tưởng của ông." },
-          { en: "A good leader welcomes honest feedback, not <em>sycophants</em>.", vi: "Một nhà lãnh đạo tốt chào đón phản hồi trung thực, không phải kẻ nịnh hót." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "vicarious",
-    phonetic: "/vɪˈkeər.i.əs/",
-    level: "C2",
-    meanings: [
-      {
-        pos: "adjective",
-        posLabel: "adj",
-        vi: "Gián tiếp, trải nghiệm thông qua người khác, thay thế",
-        examples: [
-          { en: "She lived <em>vicariously</em> through her daughter's travels.", vi: "Bà ấy sống gián tiếp qua những chuyến du lịch của con gái." },
-          { en: "Reading novels gives us <em>vicarious</em> experiences of other lives.", vi: "Đọc tiểu thuyết cho chúng ta những trải nghiệm gián tiếp về cuộc đời khác." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "equivocate",
-    phonetic: "/ɪˈkwɪv.ə.keɪt/",
-    level: "C2",
-    meanings: [
-      {
-        pos: "verb",
-        posLabel: "verb",
-        vi: "Nói nước đôi, nói mơ hồ để tránh cam kết rõ ràng",
-        examples: [
-          { en: "The minister <em>equivocated</em> when asked about the budget cuts.", vi: "Bộ trưởng nói nước đôi khi được hỏi về việc cắt giảm ngân sách." },
-          { en: "Stop <em>equivocating</em> and give us a direct answer.", vi: "Ngừng nói mơ hồ và cho chúng tôi câu trả lời thẳng thắn." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "perfidious",
-    phonetic: "/pəˈfɪd.i.əs/",
-    level: "C2",
-    meanings: [
-      {
-        pos: "adjective",
-        posLabel: "adj",
-        vi: "Phản bội, không trung thành, bội tín",
-        examples: [
-          { en: "His <em>perfidious</em> betrayal shocked everyone who trusted him.", vi: "Sự phản bội của hắn khiến mọi người tin tưởng ông ta đều bàng hoàng." },
-          { en: "The <em>perfidious</em> ally switched sides at the critical moment.", vi: "Đồng minh phản bội đổi phe vào thời điểm quan trọng." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "propitious",
-    phonetic: "/prəˈpɪʃ.əs/",
-    level: "C2",
-    meanings: [
-      {
-        pos: "adjective",
-        posLabel: "adj",
-        vi: "Thuận lợi, có triển vọng tốt, tốt lành",
-        examples: [
-          { en: "This is a <em>propitious</em> moment to launch the new product.", vi: "Đây là thời điểm thuận lợi để ra mắt sản phẩm mới." },
-          { en: "The economic conditions were not <em>propitious</em> for investment.", vi: "Điều kiện kinh tế không thuận lợi cho đầu tư." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "laconic",
-    phonetic: "/ləˈkɒn.ɪk/",
-    level: "C2",
-    meanings: [
-      {
-        pos: "adjective",
-        posLabel: "adj",
-        vi: "Kiệm lời, súc tích, nói ít nhưng đầy ý nghĩa",
-        examples: [
-          { en: "His <em>laconic</em> reply — 'No' — ended the negotiation.", vi: "Câu trả lời kiệm lời của ông ấy — 'Không' — đã kết thúc cuộc đàm phán." },
-          { en: "She is known for her <em>laconic</em> but impactful presentations.", vi: "Cô ấy nổi tiếng với những bài trình bày súc tích nhưng đầy sức mạnh." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "tenacious",
-    phonetic: "/təˈneɪ.ʃəs/",
-    level: "C1",
-    meanings: [
-      {
-        pos: "adjective",
-        posLabel: "adj",
-        vi: "Kiên trì, bền bỉ, không từ bỏ",
-        examples: [
-          { en: "She is a <em>tenacious</em> negotiator who never gives up easily.", vi: "Cô ấy là nhà đàm phán kiên trì, không bao giờ dễ dàng bỏ cuộc." },
-          { en: "His <em>tenacious</em> pursuit of excellence made him a top performer.", vi: "Sự kiên trì theo đuổi sự xuất sắc giúp anh ấy trở thành nhân viên xuất sắc nhất." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "corroborate",
-    phonetic: "/kəˈrɒb.ər.eɪt/",
-    level: "C1",
-    meanings: [
-      {
-        pos: "verb",
-        posLabel: "verb",
-        vi: "Xác nhận, chứng thực, củng cố bằng bằng chứng",
-        examples: [
-          { en: "The data <em>corroborates</em> our hypothesis about cost overruns.", vi: "Dữ liệu xác nhận giả thuyết của chúng tôi về việc vượt chi phí." },
-          { en: "Several witnesses <em>corroborated</em> his account of the incident.", vi: "Nhiều nhân chứng đã xác nhận lời kể của anh ấy về vụ việc." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "commensurate",
-    phonetic: "/kəˈmen.sər.ət/",
-    level: "C1",
-    meanings: [
-      {
-        pos: "adjective",
-        posLabel: "adj",
-        vi: "Tương xứng, cân xứng, phù hợp với",
-        examples: [
-          { en: "Her salary should be <em>commensurate</em> with her level of experience.", vi: "Mức lương của cô ấy phải tương xứng với trình độ kinh nghiệm." },
-          { en: "The punishment was not <em>commensurate</em> with the severity of the offence.", vi: "Hình phạt không tương xứng với mức độ nghiêm trọng của hành vi vi phạm." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "impeccable",
-    phonetic: "/ɪmˈpek.ə.bəl/",
-    level: "C1",
-    meanings: [
-      {
-        pos: "adjective",
-        posLabel: "adj",
-        vi: "Hoàn hảo, không có điểm gì đáng chê, mẫu mực",
-        examples: [
-          { en: "She has an <em>impeccable</em> record of accuracy in her financial reports.", vi: "Cô ấy có hồ sơ độ chính xác hoàn hảo trong các báo cáo tài chính." },
-          { en: "His <em>impeccable</em> English impressed the multinational clients.", vi: "Tiếng Anh hoàn hảo của anh ấy gây ấn tượng với các khách hàng đa quốc gia." }
-        ]
-      }
-    ]
-  },
-  {
-    word: "exacerbate",
-    phonetic: "/ɪɡˈzæs.ə.beɪt/",
-    level: "C1",
-    meanings: [
-      {
-        pos: "verb",
-        posLabel: "verb",
-        vi: "Làm trầm trọng thêm, làm tồi tệ hơn",
-        examples: [
-          { en: "The supply chain disruption <em>exacerbated</em> the cost overrun.", vi: "Sự gián đoạn chuỗi cung ứng làm trầm trọng thêm tình trạng vượt chi phí." },
-          { en: "His rude comments only <em>exacerbated</em> the conflict.", vi: "Những bình luận thô lỗ của anh ấy chỉ làm xung đột tồi tệ hơn." }
-        ]
-      }
-    ]
-  }
+const WORDS = [
+  { word:"ubiquitous", phonetic:"/juːˈbɪk.wɪ.təs/", level:"C1", meanings:[{ pos:"adjective", vi:"Có mặt khắp nơi, phổ biến rộng rãi", examples:[{en:"Smartphones have become <em>ubiquitous</em> in modern society.",vi:"Điện thoại thông minh đã trở nên phổ biến khắp nơi."},{en:"The <em>ubiquitous</em> coffee shop can be found on every corner.",vi:"Quán cà phê có mặt ở khắp mọi ngóc ngách."}]}]},
+  { word:"ambivalent", phonetic:"/æmˈbɪv.ə.lənt/", level:"C1", meanings:[{ pos:"adjective", vi:"Lưỡng lự, có cảm xúc trái chiều", examples:[{en:"She felt <em>ambivalent</em> about accepting the job offer abroad.",vi:"Cô ấy lưỡng lự về việc nhận công việc ở nước ngoài."},{en:"Many voters remain <em>ambivalent</em> about the new policy.",vi:"Nhiều cử tri vẫn không chắc chắn về chính sách mới."}]}]},
+  { word:"meticulous", phonetic:"/məˈtɪk.jʊ.ləs/", level:"C1", meanings:[{ pos:"adjective", vi:"Tỉ mỉ, cẩn thận đến từng chi tiết nhỏ", examples:[{en:"She is <em>meticulous</em> about keeping financial records accurate.",vi:"Cô ấy rất tỉ mỉ trong việc giữ hồ sơ tài chính chính xác."},{en:"The surgeon performed the operation with <em>meticulous</em> precision.",vi:"Bác sĩ thực hiện ca mổ với độ chính xác tỉ mỉ."}]}]},
+  { word:"eloquent", phonetic:"/ˈel.ə.kwənt/", level:"C1", meanings:[{ pos:"adjective", vi:"Hùng hồn, ăn nói lưu loát và thuyết phục", examples:[{en:"The lawyer delivered an <em>eloquent</em> closing argument.",vi:"Luật sư đưa ra lời biện hộ kết thúc hùng hồn."},{en:"She was an <em>eloquent</em> speaker who captivated every audience.",vi:"Cô ấy là diễn giả lưu loát, thu hút mọi khán giả."}]}]},
+  { word:"pragmatic", phonetic:"/præɡˈmæt.ɪk/", level:"C1", meanings:[{ pos:"adjective", vi:"Thực tế, thực dụng, tập trung vào kết quả", examples:[{en:"We need a <em>pragmatic</em> approach to solve this budget crisis.",vi:"Chúng ta cần cách tiếp cận thực tế để giải quyết khủng hoảng ngân sách."},{en:"A <em>pragmatic</em> manager focuses on results, not procedures.",vi:"Nhà quản lý thực dụng tập trung vào kết quả, không phải quy trình."}]}]},
+  { word:"scrutinize", phonetic:"/ˈskruː.tɪ.naɪz/", level:"C1", meanings:[{ pos:"verb", vi:"Xem xét kỹ lưỡng, kiểm tra cặn kẽ", examples:[{en:"Auditors <em>scrutinized</em> every transaction in the report.",vi:"Kiểm toán viên xem xét kỹ lưỡng mọi giao dịch trong báo cáo."},{en:"The committee will <em>scrutinize</em> the new proposal carefully.",vi:"Ủy ban sẽ kiểm tra cẩn thận đề xuất mới."}]}]},
+  { word:"mitigate", phonetic:"/ˈmɪt.ɪ.ɡeɪt/", level:"C1", meanings:[{ pos:"verb", vi:"Giảm nhẹ, làm dịu bớt rủi ro hoặc tác hại", examples:[{en:"Diversification helps <em>mitigate</em> financial risk.",vi:"Đa dạng hóa giúp giảm nhẹ rủi ro tài chính."},{en:"The company took steps to <em>mitigate</em> the environmental damage.",vi:"Công ty thực hiện các bước để giảm thiểu thiệt hại môi trường."}]}]},
+  { word:"proliferate", phonetic:"/prəˈlɪf.ər.eɪt/", level:"C1", meanings:[{ pos:"verb", vi:"Lan rộng nhanh chóng, phát triển bùng nổ", examples:[{en:"Social media platforms have <em>proliferated</em> over the past decade.",vi:"Các nền tảng mạng xã hội đã phát triển bùng nổ trong thập kỷ qua."},{en:"Fake news tends to <em>proliferate</em> during election periods.",vi:"Tin giả thường lan rộng trong giai đoạn bầu cử."}]}]},
+  { word:"anomaly", phonetic:"/əˈnɒm.ə.li/", level:"C1", meanings:[{ pos:"noun", vi:"Sự bất thường, hiện tượng ngoại lệ", examples:[{en:"The spike in costs this month is a clear <em>anomaly</em>.",vi:"Sự tăng vọt chi phí tháng này là bất thường rõ ràng."},{en:"Scientists detected an <em>anomaly</em> in the test results.",vi:"Các nhà khoa học phát hiện bất thường trong kết quả xét nghiệm."}]}]},
+  { word:"discrepancy", phonetic:"/dɪˈskrep.ən.si/", level:"C1", meanings:[{ pos:"noun", vi:"Sự chênh lệch, mâu thuẫn giữa hai số liệu", examples:[{en:"There is a significant <em>discrepancy</em> between actual and budgeted costs.",vi:"Có sự chênh lệch đáng kể giữa chi phí thực tế và ngân sách."},{en:"The auditor found a <em>discrepancy</em> in the inventory records.",vi:"Kiểm toán viên phát hiện mâu thuẫn trong hồ sơ tồn kho."}]}]},
+  { word:"ephemeral", phonetic:"/ɪˈfem.ər.əl/", level:"C2", meanings:[{ pos:"adjective", vi:"Phù du, chỉ tồn tại trong thời gian ngắn", examples:[{en:"The beauty of cherry blossoms is <em>ephemeral</em> — they last only a week.",vi:"Vẻ đẹp của hoa anh đào thật phù du, chỉ kéo dài một tuần."},{en:"Fame in the social media age is often <em>ephemeral</em>.",vi:"Danh tiếng trong thời đại mạng xã hội thường rất thoáng qua."}]}]},
+  { word:"obfuscate", phonetic:"/ˈɒb.fʌs.keɪt/", level:"C2", meanings:[{ pos:"verb", vi:"Làm rối, cố tình làm mờ hoặc khó hiểu", examples:[{en:"The politician used jargon to <em>obfuscate</em> the real issues.",vi:"Chính trị gia dùng biệt ngữ để làm mờ vấn đề thực sự."},{en:"Complex instruments can <em>obfuscate</em> actual risk levels.",vi:"Các công cụ phức tạp có thể làm rối mức độ rủi ro thực tế."}]}]},
+  { word:"sycophant", phonetic:"/ˈsɪk.ə.fænt/", level:"C2", meanings:[{ pos:"noun", vi:"Kẻ nịnh hót, người tâng bốc để đạt lợi ích", examples:[{en:"The CEO surrounded himself with <em>sycophants</em> who never challenged him.",vi:"Giám đốc bao quanh mình bằng những kẻ nịnh hót, không bao giờ phản biện."},{en:"A good leader welcomes honest feedback, not <em>sycophants</em>.",vi:"Lãnh đạo tốt chào đón phản hồi trung thực, không phải kẻ nịnh hót."}]}]},
+  { word:"equivocate", phonetic:"/ɪˈkwɪv.ə.keɪt/", level:"C2", meanings:[{ pos:"verb", vi:"Nói nước đôi, nói mơ hồ để tránh cam kết", examples:[{en:"The minister <em>equivocated</em> when asked about the budget cuts.",vi:"Bộ trưởng nói nước đôi khi được hỏi về cắt giảm ngân sách."},{en:"Stop <em>equivocating</em> and give us a direct answer.",vi:"Ngừng nói mơ hồ và cho chúng tôi câu trả lời thẳng thắn."}]}]},
+  { word:"tenacious", phonetic:"/təˈneɪ.ʃəs/", level:"C1", meanings:[{ pos:"adjective", vi:"Kiên trì, bền bỉ, không từ bỏ dễ dàng", examples:[{en:"She is a <em>tenacious</em> negotiator who never gives up.",vi:"Cô ấy là nhà đàm phán kiên trì, không bao giờ bỏ cuộc."},{en:"His <em>tenacious</em> pursuit of excellence made him a top performer.",vi:"Sự kiên trì theo đuổi sự xuất sắc giúp anh ấy trở thành nhân viên hàng đầu."}]}]},
+  { word:"corroborate", phonetic:"/kəˈrɒb.ər.eɪt/", level:"C1", meanings:[{ pos:"verb", vi:"Xác nhận, chứng thực bằng bằng chứng bổ sung", examples:[{en:"The data <em>corroborates</em> our hypothesis about cost overruns.",vi:"Dữ liệu xác nhận giả thuyết của chúng tôi về việc vượt chi phí."},{en:"Several witnesses <em>corroborated</em> his account of the incident.",vi:"Nhiều nhân chứng đã xác nhận lời kể của anh ấy."}]}]},
+  { word:"commensurate", phonetic:"/kəˈmen.sər.ət/", level:"C1", meanings:[{ pos:"adjective", vi:"Tương xứng, cân xứng, phù hợp với mức độ", examples:[{en:"Her salary should be <em>commensurate</em> with her experience.",vi:"Mức lương của cô ấy phải tương xứng với kinh nghiệm."},{en:"The punishment was not <em>commensurate</em> with the severity of the offence.",vi:"Hình phạt không tương xứng với mức độ nghiêm trọng của hành vi."}]}]},
+  { word:"impeccable", phonetic:"/ɪmˈpek.ə.bəl/", level:"C1", meanings:[{ pos:"adjective", vi:"Hoàn hảo, không có điểm gì đáng chê trách", examples:[{en:"She has an <em>impeccable</em> record of accuracy in financial reports.",vi:"Cô ấy có hồ sơ độ chính xác hoàn hảo trong báo cáo tài chính."},{en:"His <em>impeccable</em> English impressed the multinational clients.",vi:"Tiếng Anh hoàn hảo của anh ấy gây ấn tượng với khách hàng quốc tế."}]}]},
+  { word:"exacerbate", phonetic:"/ɪɡˈzæs.ə.beɪt/", level:"C1", meanings:[{ pos:"verb", vi:"Làm trầm trọng thêm, làm tồi tệ hơn", examples:[{en:"The supply chain disruption <em>exacerbated</em> the cost overrun.",vi:"Gián đoạn chuỗi cung ứng làm trầm trọng thêm tình trạng vượt chi phí."},{en:"His rude comments only <em>exacerbated</em> the conflict.",vi:"Những bình luận thô lỗ của anh ấy chỉ làm xung đột tồi tệ hơn."}]}]},
+  { word:"laconic", phonetic:"/ləˈkɒn.ɪk/", level:"C2", meanings:[{ pos:"adjective", vi:"Kiệm lời, súc tích nhưng đầy ý nghĩa", examples:[{en:"His <em>laconic</em> reply — 'No' — ended the negotiation immediately.",vi:"Câu trả lời kiệm lời của ông ấy — 'Không' — kết thúc cuộc đàm phán ngay lập tức."},{en:"She is known for her <em>laconic</em> but impactful presentations.",vi:"Cô ấy nổi tiếng với những bài trình bày súc tích nhưng đầy sức mạnh."}]}]},
+  { word:"pertinent", phonetic:"/ˈpɜː.tɪ.nənt/", level:"C1", meanings:[{ pos:"adjective", vi:"Liên quan trực tiếp, đúng trọng tâm vấn đề", examples:[{en:"Please only raise <em>pertinent</em> questions during the meeting.",vi:"Vui lòng chỉ đặt câu hỏi liên quan trong cuộc họp."},{en:"She made several <em>pertinent</em> observations about the cost structure.",vi:"Cô ấy đưa ra một số nhận xét đúng trọng tâm về cấu trúc chi phí."}]}]},
+  { word:"lucrative", phonetic:"/ˈluː.krə.tɪv/", level:"C1", meanings:[{ pos:"adjective", vi:"Có lợi nhuận cao, sinh lời nhiều, béo bở", examples:[{en:"The contract proved to be extremely <em>lucrative</em> for the company.",vi:"Hợp đồng được chứng minh là cực kỳ có lợi nhuận cho công ty."},{en:"She left her job for a more <em>lucrative</em> opportunity in finance.",vi:"Cô ấy rời công việc để theo đuổi cơ hội sinh lời hơn trong tài chính."}]}]},
+  { word:"perfidious", phonetic:"/pəˈfɪd.i.əs/", level:"C2", meanings:[{ pos:"adjective", vi:"Phản bội, không trung thành, bội tín", examples:[{en:"His <em>perfidious</em> betrayal shocked everyone who trusted him.",vi:"Sự phản bội của hắn khiến mọi người tin tưởng đều bàng hoàng."},{en:"The <em>perfidious</em> ally switched sides at the critical moment.",vi:"Đồng minh phản bội đổi phe vào thời điểm quan trọng."}]}]},
+  { word:"propitious", phonetic:"/prəˈpɪʃ.əs/", level:"C2", meanings:[{ pos:"adjective", vi:"Thuận lợi, có điều kiện tốt, là điềm lành", examples:[{en:"This is a <em>propitious</em> moment to launch the new product.",vi:"Đây là thời điểm thuận lợi để ra mắt sản phẩm mới."},{en:"The economic conditions were not <em>propitious</em> for investment.",vi:"Điều kiện kinh tế không thuận lợi cho đầu tư."}]}]},
+  { word:"vicarious", phonetic:"/vɪˈkeər.i.əs/", level:"C2", meanings:[{ pos:"adjective", vi:"Gián tiếp, trải nghiệm thông qua người khác", examples:[{en:"She lived <em>vicariously</em> through her daughter's travels.",vi:"Bà ấy sống gián tiếp qua những chuyến du lịch của con gái."},{en:"Reading novels gives us <em>vicarious</em> experiences of other lives.",vi:"Đọc tiểu thuyết cho chúng ta những trải nghiệm gián tiếp về cuộc đời khác."}]}]}
 ];
 
-let statusMap = {};
-let currentFiltered = [...words];
-let fcIndex = 0;
+let statusMap = JSON.parse(localStorage.getItem('lexiStatus') || '{}');
+let extraWords = JSON.parse(localStorage.getItem('lexiExtra') || '[]');
+let allWords = [...WORDS, ...extraWords];
+let filtered = [...allWords];
+let fcIdx = 0;
 let fcRevealed = false;
+let currentMode = 'grid';
+
+function saveStatus() { localStorage.setItem('lexiStatus', JSON.stringify(statusMap)); }
+function saveExtra() { localStorage.setItem('lexiExtra', JSON.stringify(extraWords)); }
 
 function getPosClass(pos) {
-  if (pos === 'noun') return 'pos-n';
-  if (pos === 'verb') return 'pos-v';
-  if (pos === 'adjective') return 'pos-adj';
-  if (pos === 'adverb') return 'pos-adv';
-  return 'pos-phrase';
+  if (pos==='noun') return 'pt-n';
+  if (pos==='verb') return 'pt-v';
+  if (pos==='adjective') return 'pt-adj';
+  if (pos==='adverb') return 'pt-adv';
+  return 'pt-other';
 }
-
-function getPosLabel(pos) {
-  if (pos === 'noun') return 'n.';
-  if (pos === 'verb') return 'v.';
-  if (pos === 'adjective') return 'adj.';
-  if (pos === 'adverb') return 'adv.';
+function getPosShort(pos) {
+  if (pos==='noun') return 'n.';
+  if (pos==='verb') return 'v.';
+  if (pos==='adjective') return 'adj.';
+  if (pos==='adverb') return 'adv.';
   return pos;
 }
 
-function renderCards(list) {
+function renderGrid(list) {
   const grid = document.getElementById('wordGrid');
   const empty = document.getElementById('emptyState');
-  if (list.length === 0) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
-  empty.style.display = 'none';
+  if (!list.length) { grid.innerHTML=''; empty.style.display='block'; updateStats(list); return; }
+  empty.style.display='none';
   grid.innerHTML = list.map(w => {
     const st = statusMap[w.word] || 'none';
-    const masteredClass = st === 'mastered' ? 'mastered' : st === 'studying' ? 'studying' : '';
-    const masteredLabel = st === 'mastered' ? '✅ Đã thuộc' : st === 'studying' ? '🔄 Đang học' : '📖 Thêm vào danh sách học';
-    return `
-    <div class="word-card">
-      <div class="card-header">
-        <div class="word-main">
-          <div class="word-en">${w.word}</div>
-          <div class="word-phonetic">${w.phonetic}</div>
-          <div class="word-vi">${w.meanings.map(m => m.vi).join(' · ').substring(0, 50)}...</div>
+    const stClass = st==='mastered'?'mastered':st==='studying'?'studying':'';
+    const stLabel = st==='mastered'?'✅ Đã thuộc':st==='studying'?'🔄 Đang học':'📖 Thêm vào học';
+    return `<div class="word-card">
+      <div class="card-top">
+        <div>
+          <div class="card-word">${w.word}</div>
+          <div class="card-phonetic">${w.phonetic||''}</div>
+          <div class="card-vi-short">${w.meanings[0].vi.substring(0,45)}...</div>
         </div>
-        <span class="level-badge ${w.level === 'C1' ? 'level-c1' : 'level-c2'}">${w.level}</span>
+        <span class="lv-badge ${w.level==='C1'?'lv-c1':'lv-c2'}">${w.level}</span>
       </div>
-      <div class="meanings">
-        ${w.meanings.map(m => `
-          <div class="meaning-item">
-            <span class="pos-tag ${getPosClass(m.pos)}">${getPosLabel(m.pos)}</span>
+      <div class="card-meanings">
+        ${w.meanings.map(m=>`
+          <div class="meaning-block">
+            <span class="pos-tag ${getPosClass(m.pos)}">${getPosShort(m.pos)}</span>
             <div class="meaning-vi">${m.vi}</div>
-            <ul class="examples">
-              ${m.examples.map(ex => `
-                <li>${ex.en}<span class="vi-ex">${ex.vi}</span></li>
-              `).join('')}
+            <ul class="ex-list">
+              ${m.examples.map(ex=>`<li>${ex.en}<span class="ex-vi">${ex.vi}</span></li>`).join('')}
             </ul>
-          </div>
-        `).join('')}
+          </div>`).join('')}
       </div>
       <div class="card-footer">
-        <button class="btn-learn ${masteredClass}" onclick="toggleStatus('${w.word}', this)">${masteredLabel}</button>
+        <button class="btn-status ${stClass}" onclick="toggleStatus('${w.word}',this)">${stLabel}</button>
       </div>
     </div>`;
   }).join('');
@@ -627,96 +526,188 @@ function renderCards(list) {
 }
 
 function toggleStatus(word, btn) {
-  const cur = statusMap[word] || 'none';
-  if (cur === 'none') { statusMap[word] = 'studying'; btn.textContent = '🔄 Đang học'; btn.className = 'btn-learn studying'; }
-  else if (cur === 'studying') { statusMap[word] = 'mastered'; btn.textContent = '✅ Đã thuộc'; btn.className = 'btn-learn mastered'; }
-  else { delete statusMap[word]; btn.textContent = '📖 Thêm vào danh sách học'; btn.className = 'btn-learn'; }
-  updateStats(currentFiltered);
+  const cur = statusMap[word]||'none';
+  if (cur==='none') { statusMap[word]='studying'; btn.textContent='🔄 Đang học'; btn.className='btn-status studying'; }
+  else if (cur==='studying') { statusMap[word]='mastered'; btn.textContent='✅ Đã thuộc'; btn.className='btn-status mastered'; }
+  else { delete statusMap[word]; btn.textContent='📖 Thêm vào học'; btn.className='btn-status'; }
+  saveStatus(); updateStats(filtered);
 }
 
 function updateStats(list) {
-  document.getElementById('totalCount').textContent = words.length;
-  document.getElementById('showCount').textContent = list.length;
-  document.getElementById('masteredCount').textContent = Object.values(statusMap).filter(v => v === 'mastered').length;
-  document.getElementById('studyingCount').textContent = Object.values(statusMap).filter(v => v === 'studying').length;
+  document.getElementById('s-total').textContent = allWords.length;
+  document.getElementById('s-show').textContent = list.length;
+  document.getElementById('s-study').textContent = Object.values(statusMap).filter(v=>v==='studying').length;
+  document.getElementById('s-master').textContent = Object.values(statusMap).filter(v=>v==='mastered').length;
 }
 
 function filterWords() {
   const q = document.getElementById('searchInput').value.toLowerCase();
-  const level = document.getElementById('levelFilter').value;
+  const lv = document.getElementById('levelFilter').value;
   const pos = document.getElementById('posFilter').value;
-  currentFiltered = words.filter(w => {
-    const matchQ = !q || w.word.includes(q) || w.meanings.some(m => m.vi.toLowerCase().includes(q));
-    const matchL = level === 'all' || w.level === level;
-    const matchP = pos === 'all' || w.meanings.some(m => m.pos === pos);
-    return matchQ && matchL && matchP;
+  filtered = allWords.filter(w => {
+    const mQ = !q || w.word.includes(q) || w.meanings.some(m=>m.vi.toLowerCase().includes(q));
+    const mL = lv==='all' || w.level===lv;
+    const mP = pos==='all' || w.meanings.some(m=>m.pos===pos);
+    return mQ && mL && mP;
   });
-  renderCards(currentFiltered);
-  if (document.getElementById('btnFlash').classList.contains('active')) loadFlashcard();
+  if (currentMode==='grid') renderGrid(filtered);
+  else loadFc();
 }
 
 function setMode(mode) {
-  const grid = document.getElementById('wordGrid');
-  const flash = document.getElementById('flashcardMode');
-  const empty = document.getElementById('emptyState');
-  if (mode === 'grid') {
-    grid.classList.remove('hidden');
-    flash.classList.remove('active');
+  currentMode = mode;
+  const grid = document.getElementById('mainArea');
+  const fc = document.getElementById('fcWrap');
+  if (mode==='grid') {
+    grid.style.display='block'; fc.classList.remove('active');
     document.getElementById('btnGrid').classList.add('active');
     document.getElementById('btnFlash').classList.remove('active');
-    renderCards(currentFiltered);
+    renderGrid(filtered);
   } else {
-    grid.classList.add('hidden');
-    empty.style.display = 'none';
-    flash.classList.add('active');
+    grid.style.display='none'; fc.classList.add('active');
     document.getElementById('btnFlash').classList.add('active');
     document.getElementById('btnGrid').classList.remove('active');
-    fcIndex = 0;
-    loadFlashcard();
+    fcIdx=0; loadFc();
   }
 }
 
-function loadFlashcard() {
-  if (currentFiltered.length === 0) return;
-  const w = currentFiltered[fcIndex];
+function loadFc() {
+  if (!filtered.length) return;
+  const w = filtered[fcIdx];
   fcRevealed = false;
   document.getElementById('fcWord').textContent = w.word;
-  document.getElementById('fcPhonetic').textContent = w.phonetic;
-  document.getElementById('fcLevel').innerHTML = `<span class="level-badge ${w.level === 'C1' ? 'level-c1' : 'level-c2'}">${w.level}</span>`;
-  document.getElementById('fcReveal').classList.remove('show');
-  document.getElementById('fcNav').style.display = 'none';
-  document.getElementById('fcHint').style.display = 'block';
-  document.getElementById('fcProgress').textContent = `Từ ${fcIndex + 1} / ${currentFiltered.length}`;
-  const m = w.meanings[0];
-  document.getElementById('fcVi').textContent = m.vi;
-  document.getElementById('fcExample').textContent = m.examples[0].en.replace(/<[^>]+>/g, '');
+  document.getElementById('fcPhone').textContent = w.phonetic||'';
+  document.getElementById('fcLv').innerHTML = `<span class="lv-badge ${w.level==='C1'?'lv-c1':'lv-c2'}">${w.level}</span>`;
+  document.getElementById('fcAnswer').classList.remove('show');
+  document.getElementById('fcAct').style.display='none';
+  document.getElementById('fcTap').style.display='block';
+  document.getElementById('fcViB').textContent = w.meanings[0].vi;
+  document.getElementById('fcExS').innerHTML = w.meanings[0].examples[0].en;
+  const pct = Math.round(((fcIdx+1)/filtered.length)*100);
+  document.getElementById('fcFill').style.width = pct+'%';
+  document.getElementById('fcCounter').textContent = `${fcIdx+1} / ${filtered.length}`;
 }
 
-function revealCard() {
+function revealFc() {
   if (fcRevealed) return;
-  fcRevealed = true;
-  document.getElementById('fcReveal').classList.add('show');
-  document.getElementById('fcNav').style.display = 'flex';
-  document.getElementById('fcHint').style.display = 'none';
+  fcRevealed=true;
+  document.getElementById('fcAnswer').classList.add('show');
+  document.getElementById('fcAct').style.display='flex';
+  document.getElementById('fcTap').style.display='none';
 }
 
-function markCard(result) {
-  const w = currentFiltered[fcIndex];
-  if (result === 'know') statusMap[w.word] = 'mastered';
-  else statusMap[w.word] = 'studying';
-  nextCard();
+function fcMark(result) {
+  const w = filtered[fcIdx];
+  statusMap[w.word] = result==='know'?'mastered':'studying';
+  saveStatus(); updateStats(filtered);
+  fcNav(1);
 }
 
-function nextCard() {
-  if (fcIndex < currentFiltered.length - 1) { fcIndex++; loadFlashcard(); }
-  else { fcIndex = 0; loadFlashcard(); }
+function fcNav(dir) {
+  fcIdx = (fcIdx+dir+filtered.length)%filtered.length;
+  loadFc();
 }
 
-function prevCard() {
-  if (fcIndex > 0) { fcIndex--; loadFlashcard(); }
+async function lookupWord() {
+  const input = document.getElementById('lookupInput');
+  const word = input.value.trim();
+  if (!word) return;
+  const btn = document.getElementById('lookupBtn');
+  const area = document.getElementById('resultArea');
+  btn.disabled=true; btn.textContent='Đang tra...';
+  area.style.display='block';
+  area.innerHTML = `<div class="result-card">
+    <div class="result-header">
+      <div><div class="result-word">${word}</div><div class="result-phonetic">Đang tải...</div></div>
+    </div>
+    <div class="result-body">
+      <div class="loading-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    </div>
+  </div>`;
+  area.scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{
+          role:'user',
+          content:`Tra từ tiếng Anh: "${word}"
+
+Trả lời ĐÚNG định dạng JSON sau, không có markdown, không có text thêm:
+{
+  "word": "${word}",
+  "phonetic": "/phiên âm IPA/",
+  "level": "C1 hoặc C2",
+  "meanings": [
+    {
+      "pos": "noun hoặc verb hoặc adjective hoặc adverb",
+      "vi": "Nghĩa tiếng Việt ngắn gọn",
+      "examples": [
+        {"en": "Câu ví dụ tiếng Anh với <em>${word}</em> trong câu", "vi": "Dịch tiếng Việt"},
+        {"en": "Câu ví dụ thứ 2 với <em>${word}</em>", "vi": "Dịch tiếng Việt"}
+      ]
+    }
+  ]
 }
 
-renderCards(words);
+Nếu từ có nhiều nghĩa khác nhau, thêm nhiều object vào mảng meanings. Chỉ trả về JSON.`
+        }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content.map(c=>c.text||'').join('');
+    const clean = text.replace(/```json|```/g,'').trim();
+    const parsed = JSON.parse(clean);
+
+    const exists = allWords.find(w=>w.word.toLowerCase()===parsed.word.toLowerCase());
+    if (!exists) {
+      extraWords.push(parsed);
+      allWords = [...WORDS, ...extraWords];
+      saveExtra();
+    }
+
+    const st = statusMap[parsed.word]||'none';
+    const stClass = st==='mastered'?'mastered':st==='studying'?'studying':'';
+    const stLabel = st==='mastered'?'✅ Đã thuộc':st==='studying'?'🔄 Đang học':'📖 Thêm vào danh sách học';
+
+    area.innerHTML = `<div class="result-card">
+      <div class="result-header">
+        <div>
+          <div class="result-word">${parsed.word}</div>
+          <div class="result-phonetic">${parsed.phonetic}</div>
+        </div>
+        <div class="result-badges">
+          <span class="lv-badge ${parsed.level==='C1'?'lv-c1':'lv-c2'}">${parsed.level}</span>
+          ${!exists?'<span class="lv-badge" style="background:#e8f5e9;color:#2e7d32;">✅ Đã lưu</span>':'<span class="lv-badge" style="background:#fff3e0;color:#e65100;">Đã có trong danh sách</span>'}
+        </div>
+      </div>
+      <div class="result-body">
+        ${parsed.meanings.map(m=>`
+          <div class="ai-meaning">
+            <span class="ai-pos ${getPosClass(m.pos)}">${getPosShort(m.pos)}</span>
+            <div class="ai-vi">${m.vi}</div>
+            <ul class="ai-examples">
+              ${m.examples.map(ex=>`<li>${ex.en}<span class="vi">${ex.vi}</span></li>`).join('')}
+            </ul>
+          </div>`).join('')}
+        <div style="margin-top:1rem;">
+          <button class="btn-status ${stClass}" style="width:100%;" onclick="toggleStatus('${parsed.word}',this);filterWords();">${stLabel}</button>
+        </div>
+      </div>
+    </div>`;
+    filterWords();
+  } catch(e) {
+    area.innerHTML = `<div class="result-card"><div class="result-body"><div class="err-msg">❌ Không tra được từ này. Vui lòng thử lại sau.<br><small>${e.message}</small></div></div></div>`;
+  }
+  btn.disabled=false; btn.textContent='Tra từ với AI ✨';
+}
+
+renderGrid(allWords);
+filtered = [...allWords];
 </script>
 </body>
 </html>
