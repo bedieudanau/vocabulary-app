@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Từ vựng Tiếng Anh C1/C2</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #f5f5f0; color: #1a1a1a; min-height: 100vh; }
+
+.header { background: #1a1a2e; color: white; padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.header h1 { font-size: 22px; font-weight: 600; }
+.header p { font-size: 13px; opacity: 0.7; margin-top: 4px; }
+.badge { background: #4CAF50; color: white; font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 600; }
+
+.controls { background: white; border-bottom: 1px solid #e8e8e0; padding: 1rem 2rem; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.search-wrap { position: relative; flex: 1; min-width: 200px; }
+.search-wrap input { width: 100%; padding: 8px 12px 8px 36px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; }
+.search-wrap input:focus { border-color: #1a1a2e; }
+.search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #999; font-size: 16px; }
+select { padding: 8px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; background: white; outline: none; cursor: pointer; }
+.btn-mode { padding: 8px 16px; border: 1px solid #1a1a2e; border-radius: 8px; font-size: 13px; cursor: pointer; background: white; transition: all 0.2s; }
+.btn-mode.active { background: #1a1a2e; color: white; }
+
+.stats { display: flex; gap: 8px; padding: 1rem 2rem; background: white; border-bottom: 1px solid #e8e8e0; flex-wrap: wrap; }
+.stat { background: #f5f5f0; border-radius: 8px; padding: 6px 14px; font-size: 12px; color: #555; }
+.stat span { font-weight: 600; color: #1a1a2e; }
+
+.main { padding: 1.5rem 2rem; max-width: 1200px; margin: 0 auto; }
+
+.word-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+
+.word-card { background: white; border-radius: 12px; border: 1px solid #e8e8e0; overflow: hidden; transition: box-shadow 0.2s; }
+.word-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+
+.card-header { padding: 1rem 1.25rem 0.75rem; border-bottom: 1px solid #f0f0e8; display: flex; justify-content: space-between; align-items: flex-start; }
+.word-main { flex: 1; }
+.word-en { font-size: 20px; font-weight: 600; color: #1a1a2e; }
+.word-phonetic { font-size: 13px; color: #888; margin-top: 2px; font-style: italic; }
+.word-vi { font-size: 14px; color: #2e7d32; font-weight: 500; margin-top: 4px; }
+.level-badge { font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600; white-space: nowrap; }
+.level-c1 { background: #e3f2fd; color: #1565c0; }
+.level-c2 { background: #fce4ec; color: #880e4f; }
+
+.meanings { padding: 0.75rem 1.25rem; }
+.meaning-item { margin-bottom: 0.75rem; }
+.meaning-item:last-child { margin-bottom: 0; }
+.pos-tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 600; margin-bottom: 4px; }
+.pos-n { background: #fff3e0; color: #e65100; }
+.pos-v { background: #e8f5e9; color: #2e7d32; }
+.pos-adj { background: #e8eaf6; color: #283593; }
+.pos-adv { background: #fce4ec; color: #880e4f; }
+.pos-phrase { background: #f3e5f5; color: #6a1b9a; }
+
+.meaning-vi { font-size: 14px; color: #333; margin-bottom: 6px; }
+.examples { list-style: none; }
+.examples li { font-size: 13px; color: #555; padding: 4px 0 4px 12px; border-left: 2px solid #e0e0e0; margin-bottom: 4px; line-height: 1.5; }
+.examples li em { color: #1565c0; font-style: normal; font-weight: 500; }
+.examples li .vi-ex { display: block; color: #888; font-size: 12px; margin-top: 2px; }
+
+.card-footer { padding: 0.5rem 1.25rem; background: #fafaf8; border-top: 1px solid #f0f0e8; display: flex; gap: 8px; }
+.btn-learn { flex: 1; padding: 6px; border: 1px solid #ddd; border-radius: 6px; font-size: 12px; cursor: pointer; background: white; transition: all 0.2s; }
+.btn-learn:hover { background: #f5f5f0; }
+.btn-learn.mastered { background: #e8f5e9; border-color: #a5d6a7; color: #2e7d32; }
+.btn-learn.studying { background: #fff3e0; border-color: #ffcc80; color: #e65100; }
+
+.empty { text-align: center; padding: 3rem; color: #888; }
+.empty i { font-size: 48px; margin-bottom: 1rem; display: block; }
+
+/* Flashcard mode */
+.flashcard-mode { display: none; text-align: center; max-width: 600px; margin: 2rem auto; }
+.flashcard-mode.active { display: block; }
+.word-grid.hidden { display: none; }
+
+.flashcard { background: white; border-radius: 16px; border: 1px solid #e8e8e0; padding: 2.5rem; min-height: 300px; display: flex; flex-direction: column; justify-content: center; cursor: pointer; transition: all 0.3s; }
+.flashcard:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.fc-word { font-size: 36px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+.fc-phonetic { font-size: 16px; color: #888; font-style: italic; }
+.fc-level { margin-top: 12px; }
+.fc-reveal { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #f0f0e8; display: none; }
+.fc-reveal.show { display: block; }
+.fc-vi { font-size: 20px; color: #2e7d32; font-weight: 600; margin-bottom: 1rem; }
+.fc-example { font-size: 14px; color: #555; font-style: italic; }
+.fc-nav { display: flex; gap: 12px; margin-top: 1.5rem; justify-content: center; }
+.fc-nav button { padding: 10px 24px; border-radius: 8px; border: 1px solid #ddd; cursor: pointer; font-size: 14px; transition: all 0.2s; }
+.fc-nav .btn-know { background: #e8f5e9; border-color: #a5d6a7; color: #2e7d32; }
+.fc-nav .btn-again { background: #fff3e0; border-color: #ffcc80; color: #e65100; }
+.fc-nav .btn-prev { background: white; }
+.fc-progress { font-size: 13px; color: #888; margin-bottom: 1rem; }
+.fc-hint { font-size: 13px; color: #bbb; margin-top: 1rem; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>📚 Từ vựng Tiếng Anh C1 / C2</h1>
+    <p>Học từ vựng nâng cao với nghĩa tiếng Việt và ví dụ theo từng loại từ</p>
+  </div>
+  <div style="display:flex; gap:8px; align-items:center;">
+    <span class="badge">C1</span>
+    <span class="badge" style="background:#e91e63;">C2</span>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Tìm từ vựng..." oninput="filterWords()">
+  </div>
+  <select id="levelFilter" onchange="filterWords()">
+    <option value="all">Tất cả cấp độ</option>
+    <option value="C1">C1</option>
+    <option value="C2">C2</option>
+  </select>
+  <select id="posFilter" onchange="filterWords()">
+    <option value="all">Tất cả loại từ</option>
+    <option value="noun">Danh từ (n)</option>
+    <option value="verb">Động từ (v)</option>
+    <option value="adjective">Tính từ (adj)</option>
+    <option value="adverb">Trạng từ (adv)</option>
+  </select>
+  <button class="btn-mode active" id="btnGrid" onclick="setMode('grid')">📋 Danh sách</button>
+  <button class="btn-mode" id="btnFlash" onclick="setMode('flash')">🃏 Flashcard</button>
+</div>
+
+<div class="stats" id="statsBar">
+  <div class="stat">Tổng: <span id="totalCount">0</span> từ</div>
+  <div class="stat">Đang hiển thị: <span id="showCount">0</span> từ</div>
+  <div class="stat">Đã thuộc: <span id="masteredCount">0</span> từ</div>
+  <div class="stat">Đang học: <span id="studyingCount">0</span> từ</div>
+</div>
+
+<div class="main">
+  <div class="word-grid" id="wordGrid"></div>
+  <div class="empty" id="emptyState" style="display:none;">
+    <i>🔍</i>
+    <p>Không tìm thấy từ vựng phù hợp</p>
+  </div>
+
+  <div class="flashcard-mode" id="flashcardMode">
+    <div class="fc-progress" id="fcProgress">Từ 1 / 10</div>
+    <div class="flashcard" id="flashcard" onclick="revealCard()">
+      <div class="fc-word" id="fcWord">—</div>
+      <div class="fc-phonetic" id="fcPhonetic">—</div>
+      <div class="fc-level" id="fcLevel"></div>
+      <div class="fc-reveal" id="fcReveal">
+        <div class="fc-vi" id="fcVi"></div>
+        <div class="fc-example" id="fcExample"></div>
+      </div>
+      <div class="fc-hint" id="fcHint">👆 Nhấn để xem nghĩa</div>
+    </div>
+    <div class="fc-nav" id="fcNav" style="display:none;">
+      <button class="btn-again" onclick="markCard('again')">🔄 Học lại</button>
+      <button class="btn-know" onclick="markCard('know')">✅ Đã thuộc</button>
+    </div>
+    <div class="fc-nav">
+      <button class="btn-prev" onclick="prevCard()">← Trước</button>
+      <button class="btn-prev" onclick="nextCard()">Tiếp →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const words = [
+  {
+    word: "ubiquitous",
+    phonetic: "/juːˈbɪk.wɪ.təs/",
+    level: "C1",
+    meanings: [
+      {
+        pos: "adjective",
+        posLabel: "adj",
+        vi: "Có mặt khắp nơi, phổ biến rộng rãi",
+        examples: [
+          { en: "Smartphones have become <em>ubiquitous</em> in modern society.", vi: "Điện thoại thông minh đã trở nên phổ biến khắp nơi trong xã hội hiện đại." },
+          { en: "The <em>ubiquitous</em> coffee shop can be found on every street corner.", vi: "Quán cà phê có mặt ở khắp nơi, từng góc phố đều có thể thấy." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "ambivalent",
+    phonetic: "/æmˈbɪv.ə.lənt/",
+    level: "C1",
+    meanings: [
+      {
+        pos: "adjective",
+        posLabel: "adj",
+        vi: "Lưỡng lự, có cảm xúc trái chiều, không chắc chắn",
+        examples: [
+          { en: "She felt <em>ambivalent</em> about accepting the job offer abroad.", vi: "Cô ấy cảm thấy lưỡng lự về việc chấp nhận công việc ở nước ngoài." },
+          { en: "Many voters remain <em>ambivalent</em> about the new policy.", vi: "Nhiều cử tri vẫn không chắc chắn về chính sách mới." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "meticulous",
+    phonetic: "/məˈtɪk.jʊ.ləs/",
+    level: "C1",
+    meanings: [
+      {
+        pos: "adjective",
+        posLabel: "adj",
+        vi: "Tỉ mỉ, cẩn thận, kỹ lưỡng đến từng chi tiết",
+        examples: [
+          { en: "She is <em>meticulous</em> about keeping financial records accurate.", vi: "Cô ấy rất tỉ mỉ trong việc giữ hồ sơ tài chính chính xác." },
+          { en: "The surgeon performed the operation with <em>meticulous</em> precision.", vi: "Bác sĩ phẫu thuật thực hiện ca mổ với độ chính xác kỹ lưỡng." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "eloquent",
+    phonetic: "/ˈel.ə.kwənt/",
+    level: "C1",
+    meanings: [
+      {
+        pos: "adjective",
+        posLabel: "adj",
+        vi: "Hùng hồn, ăn nói lưu loát, diễn đạt khéo léo",
+        examples: [
+          { en: "The lawyer delivered an <em>eloquent</em> closing argument.", vi: "Luật sư đưa ra lời biện hộ kết thúc hùng hồn." },
+          { en: "She was an <em>eloquent</em> speaker who captivated every audience.", vi: "Cô ấy là người nói chuyện lưu loát, thu hút mọi khán giả." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "pragmatic",
+    phonetic: "/præɡˈmæt.ɪk/",
+    level: "C1",
+    meanings: [
+      {
+        pos: "adjective",
+        posLabel: "adj",
+        vi: "Thực tế, thực dụng, tập trung vào kết quả thực tiễn",
+        examples: [
+          { en: "We need a <em>pragmatic</em> approach to solve this budget crisis.", vi: "Chúng ta cần cách tiếp cận thực tế để giải quyết khủng hoảng ngân sách này." },
+          { en: "A <em>pragmatic</em> manager focuses on results, not procedures.", vi: "Nhà quản lý thực dụng tập trung vào kết quả, không phải quy trình." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "scrutinize",
+    phonetic: "/ˈskruː.tɪ.naɪz/",
+    level: "C1",
+    meanings: [
+      {
+        pos: "verb",
+        posLabel: "verb",
+        vi: "Xem xét kỹ lưỡng, kiểm tra cặn kẽ",
+        examples: [
+          { en: "Auditors <em>scrutinized</em> every transaction in the financial report.", vi: "Kiểm toán viên xem xét kỹ lưỡng mọi giao dịch trong báo cáo tài chính." },
+          { en: "The committee will <em>scrutinize</em> the new proposal carefully.", vi: "Ủy ban sẽ kiểm tra cẩn thận đề xuất mới." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "mitigate",
+    phonetic: "/ˈmɪt.ɪ.ɡeɪt/",
+    level: "C1",
+    meanings: [
+      {
+        pos: "verb",
+        posLabel: "verb",
+        vi: "Giảm nhẹ, làm dịu bớt (rủi ro, tác hại)",
+        examples: [
+          { en: "Diversification helps <em>mitigate</em> financial risk in a portfolio.", vi: "Đa dạng hóa giúp giảm nhẹ rủi ro tài chính trong danh mục đầu tư." },
+          { en: "The company took steps to <em>mitigate</em> the environmental damage.", vi: "Công ty thực hiện các bước để giảm thiểu thiệt hại môi trường." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "proliferate",
+    phonetic: "/prəˈlɪf.ər.eɪt/",
+    level: "C1",
+    meanings: [
+      {
+        pos: "verb",
+        posLabel: "verb",
+        vi: "Sinh sôi nảy nở, lan rộng nhanh chóng, phát triển mạnh",
+        examples: [
+          { en: "Social media platforms have <em>proliferated</em> over the past decade.", vi: "Các nền tảng mạng xã hội đã phát triển mạnh trong thập kỷ qua." },
+          { en: "Fake news tends to <em>proliferate</em> during election periods.", vi: "Tin giả thường lan rộng trong giai đoạn bầu cử." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "anomaly",
+    phonetic: "/əˈnɒm.ə.li/",
+    level: "C1",
+    meanings: [
+      {
+        pos: "noun",
+        posLabel: "noun",
+        vi: "Sự bất thường, hiện tượng ngoại lệ, điều không theo quy luật",
+        examples: [
+          { en: "The spike in costs this month is a clear <em>anomaly</em> that needs investigation.", vi: "Sự tăng vọt chi phí tháng này là bất thường rõ ràng cần điều tra." },
+          { en: "Scientists detected an <em>anomaly</em> in the patient's test results.", vi: "Các nhà khoa học phát hiện bất thường trong kết quả xét nghiệm của bệnh nhân." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "discrepancy",
+    phonetic: "/dɪˈskrep.ən.si/",
+    level: "C1",
+    meanings: [
+      {
+        pos: "noun",
+        posLabel: "noun",
+        vi: "Sự chênh lệch, mâu thuẫn giữa hai số liệu hoặc tuyên bố",
+        examples: [
+          { en: "There is a significant <em>discrepancy</em> between the actual and budgeted costs.", vi: "Có sự chênh lệch đáng kể giữa chi phí thực tế và ngân sách." },
+          { en: "The auditor found a <em>discrepancy</em> in the inventory records.", vi: "Kiểm toán viên phát hiện mâu thuẫn trong hồ sơ tồn kho." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "pertinent",
+    phonetic: "/ˈpɜː.tɪ.nənt/",
+    level: "C1",
+    meanings: [
+      {
+        pos: "adjective",
+        posLabel: "adj",
+        vi: "Liên quan, thích hợp, đúng trọng tâm",
+        examples: [
+          { en: "Please only raise <em>pertinent</em> questions during the meeting.", vi: "Vui lòng chỉ đặt câu hỏi liên quan trong cuộc họp." },
+          { en: "She made several <em>pertinent</em> observations about the cost structure.", vi: "Cô ấy đưa ra một số nhận xét thích hợp về cấu trúc chi phí." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "lucrative",
+    phonetic: "/ˈluː.krə.tɪv/",
+    level: "C1",
+    meanings: [
+      {
+        pos: "adjective",
+        posLabel: "adj",
+        vi: "Có lợi nhuận cao, sinh lời nhiều, béo bở",
+        examples: [
+          { en: "The contract proved to be extremely <em>lucrative</em> for the company.", vi: "Hợp đồng được chứng minh là cực kỳ có lợi nhuận cho công ty." },
+          { en: "She left her job for a more <em>lucrative</em> opportunity in finance.", vi: "Cô ấy rời công việc để theo đuổi cơ hội sinh lời hơn trong lĩnh vực tài chính." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "ephemeral",
+    phonetic: "/ɪˈfem.ər.əl/",
+    level: "C2",
+    meanings: [
+      {
+        pos: "adjective",
+        posLabel: "adj",
+        vi: "Chỉ tồn tại trong thời gian ngắn, phù du, thoáng qua",
+        examples: [
+          { en: "The beauty of cherry blossoms is <em>ephemeral</em> — they last only a week.", vi: "Vẻ đẹp của hoa anh đào thật phù du — chỉ kéo dài một tuần." },
+          { en: "Fame in the social media age is often <em>ephemeral</em>.", vi: "Danh tiếng trong thời đại mạng xã hội thường rất thoáng qua." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "obfuscate",
+    phonetic: "/ˈɒb.fʌs.keɪt/",
+    level: "C2",
+    meanings: [
+      {
+        pos: "verb",
+        posLabel: "verb",
+        vi: "Làm rối, làm mờ, cố tình làm khó hiểu",
+        examples: [
+          { en: "The politician used jargon to <em>obfuscate</em> the real issues.", vi: "Chính trị gia dùng thuật ngữ chuyên ngành để làm mờ các vấn đề thực sự." },
+          { en: "Complex financial instruments can <em>obfuscate</em> actual risk levels.", vi: "Các công cụ tài chính phức tạp có thể làm rối mức độ rủi ro thực tế." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "sycophant",
+    phonetic: "/ˈsɪk.ə.fænt/",
+    level: "C2",
+    meanings: [
+      {
+        pos: "noun",
+        posLabel: "noun",
+        vi: "Kẻ nịnh hót, người tâng bốc để đạt lợi ích cá nhân",
+        examples: [
+          { en: "The CEO surrounded himself with <em>sycophants</em> who never challenged his ideas.", vi: "Giám đốc điều hành bao quanh mình bằng những kẻ nịnh hót, không bao giờ thách thức ý tưởng của ông." },
+          { en: "A good leader welcomes honest feedback, not <em>sycophants</em>.", vi: "Một nhà lãnh đạo tốt chào đón phản hồi trung thực, không phải kẻ nịnh hót." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "vicarious",
+    phonetic: "/vɪˈkeər.i.əs/",
+    level: "C2",
+    meanings: [
+      {
+        pos: "adjective",
+        posLabel: "adj",
+        vi: "Gián tiếp, trải nghiệm thông qua người khác, thay thế",
+        examples: [
+          { en: "She lived <em>vicariously</em> through her daughter's travels.", vi: "Bà ấy sống gián tiếp qua những chuyến du lịch của con gái." },
+          { en: "Reading novels gives us <em>vicarious</em> experiences of other lives.", vi: "Đọc tiểu thuyết cho chúng ta những trải nghiệm gián tiếp về cuộc đời khác." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "equivocate",
+    phonetic: "/ɪˈkwɪv.ə.keɪt/",
+    level: "C2",
+    meanings: [
+      {
+        pos: "verb",
+        posLabel: "verb",
+        vi: "Nói nước đôi, nói mơ hồ để tránh cam kết rõ ràng",
+        examples: [
+          { en: "The minister <em>equivocated</em> when asked about the budget cuts.", vi: "Bộ trưởng nói nước đôi khi được hỏi về việc cắt giảm ngân sách." },
+          { en: "Stop <em>equivocating</em> and give us a direct answer.", vi: "Ngừng nói mơ hồ và cho chúng tôi câu trả lời thẳng thắn." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "perfidious",
+    phonetic: "/pəˈfɪd.i.əs/",
+    level: "C2",
+    meanings: [
+      {
+        pos: "adjective",
+        posLabel: "adj",
+        vi: "Phản bội, không trung thành, bội tín",
+        examples: [
+          { en: "His <em>perfidious</em> betrayal shocked everyone who trusted him.", vi: "Sự phản bội của hắn khiến mọi người tin tưởng ông ta đều bàng hoàng." },
+          { en: "The <em>perfidious</em> ally switched sides at the critical moment.", vi: "Đồng minh phản bội đổi phe vào thời điểm quan trọng." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "propitious",
+    phonetic: "/prəˈpɪʃ.əs/",
+    level: "C2",
+    meanings: [
+      {
+        pos: "adjective",
+        posLabel: "adj",
+        vi: "Thuận lợi, có triển vọng tốt, tốt lành",
+        examples: [
+          { en: "This is a <em>propitious</em> moment to launch the new product.", vi: "Đây là thời điểm thuận lợi để ra mắt sản phẩm mới." },
+          { en: "The economic conditions were not <em>propitious</em> for investment.", vi: "Điều kiện kinh tế không thuận lợi cho đầu tư." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "laconic",
+    phonetic: "/ləˈkɒn.ɪk/",
+    level: "C2",
+    meanings: [
+      {
+        pos: "adjective",
+        posLabel: "adj",
+        vi: "Kiệm lời, súc tích, nói ít nhưng đầy ý nghĩa",
+        examples: [
+          { en: "His <em>laconic</em> reply — 'No' — ended the negotiation.", vi: "Câu trả lời kiệm lời của ông ấy — 'Không' — đã kết thúc cuộc đàm phán." },
+          { en: "She is known for her <em>laconic</em> but impactful presentations.", vi: "Cô ấy nổi tiếng với những bài trình bày súc tích nhưng đầy sức mạnh." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "tenacious",
+    phonetic: "/təˈneɪ.ʃəs/",
+    level: "C1",
+    meanings: [
+      {
+        pos: "adjective",
+        posLabel: "adj",
+        vi: "Kiên trì, bền bỉ, không từ bỏ",
+        examples: [
+          { en: "She is a <em>tenacious</em> negotiator who never gives up easily.", vi: "Cô ấy là nhà đàm phán kiên trì, không bao giờ dễ dàng bỏ cuộc." },
+          { en: "His <em>tenacious</em> pursuit of excellence made him a top performer.", vi: "Sự kiên trì theo đuổi sự xuất sắc giúp anh ấy trở thành nhân viên xuất sắc nhất." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "corroborate",
+    phonetic: "/kəˈrɒb.ər.eɪt/",
+    level: "C1",
+    meanings: [
+      {
+        pos: "verb",
+        posLabel: "verb",
+        vi: "Xác nhận, chứng thực, củng cố bằng bằng chứng",
+        examples: [
+          { en: "The data <em>corroborates</em> our hypothesis about cost overruns.", vi: "Dữ liệu xác nhận giả thuyết của chúng tôi về việc vượt chi phí." },
+          { en: "Several witnesses <em>corroborated</em> his account of the incident.", vi: "Nhiều nhân chứng đã xác nhận lời kể của anh ấy về vụ việc." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "commensurate",
+    phonetic: "/kəˈmen.sər.ət/",
+    level: "C1",
+    meanings: [
+      {
+        pos: "adjective",
+        posLabel: "adj",
+        vi: "Tương xứng, cân xứng, phù hợp với",
+        examples: [
+          { en: "Her salary should be <em>commensurate</em> with her level of experience.", vi: "Mức lương của cô ấy phải tương xứng với trình độ kinh nghiệm." },
+          { en: "The punishment was not <em>commensurate</em> with the severity of the offence.", vi: "Hình phạt không tương xứng với mức độ nghiêm trọng của hành vi vi phạm." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "impeccable",
+    phonetic: "/ɪmˈpek.ə.bəl/",
+    level: "C1",
+    meanings: [
+      {
+        pos: "adjective",
+        posLabel: "adj",
+        vi: "Hoàn hảo, không có điểm gì đáng chê, mẫu mực",
+        examples: [
+          { en: "She has an <em>impeccable</em> record of accuracy in her financial reports.", vi: "Cô ấy có hồ sơ độ chính xác hoàn hảo trong các báo cáo tài chính." },
+          { en: "His <em>impeccable</em> English impressed the multinational clients.", vi: "Tiếng Anh hoàn hảo của anh ấy gây ấn tượng với các khách hàng đa quốc gia." }
+        ]
+      }
+    ]
+  },
+  {
+    word: "exacerbate",
+    phonetic: "/ɪɡˈzæs.ə.beɪt/",
+    level: "C1",
+    meanings: [
+      {
+        pos: "verb",
+        posLabel: "verb",
+        vi: "Làm trầm trọng thêm, làm tồi tệ hơn",
+        examples: [
+          { en: "The supply chain disruption <em>exacerbated</em> the cost overrun.", vi: "Sự gián đoạn chuỗi cung ứng làm trầm trọng thêm tình trạng vượt chi phí." },
+          { en: "His rude comments only <em>exacerbated</em> the conflict.", vi: "Những bình luận thô lỗ của anh ấy chỉ làm xung đột tồi tệ hơn." }
+        ]
+      }
+    ]
+  }
+];
+
+let statusMap = {};
+let currentFiltered = [...words];
+let fcIndex = 0;
+let fcRevealed = false;
+
+function getPosClass(pos) {
+  if (pos === 'noun') return 'pos-n';
+  if (pos === 'verb') return 'pos-v';
+  if (pos === 'adjective') return 'pos-adj';
+  if (pos === 'adverb') return 'pos-adv';
+  return 'pos-phrase';
+}
+
+function getPosLabel(pos) {
+  if (pos === 'noun') return 'n.';
+  if (pos === 'verb') return 'v.';
+  if (pos === 'adjective') return 'adj.';
+  if (pos === 'adverb') return 'adv.';
+  return pos;
+}
+
+function renderCards(list) {
+  const grid = document.getElementById('wordGrid');
+  const empty = document.getElementById('emptyState');
+  if (list.length === 0) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  grid.innerHTML = list.map(w => {
+    const st = statusMap[w.word] || 'none';
+    const masteredClass = st === 'mastered' ? 'mastered' : st === 'studying' ? 'studying' : '';
+    const masteredLabel = st === 'mastered' ? '✅ Đã thuộc' : st === 'studying' ? '🔄 Đang học' : '📖 Thêm vào danh sách học';
+    return `
+    <div class="word-card">
+      <div class="card-header">
+        <div class="word-main">
+          <div class="word-en">${w.word}</div>
+          <div class="word-phonetic">${w.phonetic}</div>
+          <div class="word-vi">${w.meanings.map(m => m.vi).join(' · ').substring(0, 50)}...</div>
+        </div>
+        <span class="level-badge ${w.level === 'C1' ? 'level-c1' : 'level-c2'}">${w.level}</span>
+      </div>
+      <div class="meanings">
+        ${w.meanings.map(m => `
+          <div class="meaning-item">
+            <span class="pos-tag ${getPosClass(m.pos)}">${getPosLabel(m.pos)}</span>
+            <div class="meaning-vi">${m.vi}</div>
+            <ul class="examples">
+              ${m.examples.map(ex => `
+                <li>${ex.en}<span class="vi-ex">${ex.vi}</span></li>
+              `).join('')}
+            </ul>
+          </div>
+        `).join('')}
+      </div>
+      <div class="card-footer">
+        <button class="btn-learn ${masteredClass}" onclick="toggleStatus('${w.word}', this)">${masteredLabel}</button>
+      </div>
+    </div>`;
+  }).join('');
+  updateStats(list);
+}
+
+function toggleStatus(word, btn) {
+  const cur = statusMap[word] || 'none';
+  if (cur === 'none') { statusMap[word] = 'studying'; btn.textContent = '🔄 Đang học'; btn.className = 'btn-learn studying'; }
+  else if (cur === 'studying') { statusMap[word] = 'mastered'; btn.textContent = '✅ Đã thuộc'; btn.className = 'btn-learn mastered'; }
+  else { delete statusMap[word]; btn.textContent = '📖 Thêm vào danh sách học'; btn.className = 'btn-learn'; }
+  updateStats(currentFiltered);
+}
+
+function updateStats(list) {
+  document.getElementById('totalCount').textContent = words.length;
+  document.getElementById('showCount').textContent = list.length;
+  document.getElementById('masteredCount').textContent = Object.values(statusMap).filter(v => v === 'mastered').length;
+  document.getElementById('studyingCount').textContent = Object.values(statusMap).filter(v => v === 'studying').length;
+}
+
+function filterWords() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const level = document.getElementById('levelFilter').value;
+  const pos = document.getElementById('posFilter').value;
+  currentFiltered = words.filter(w => {
+    const matchQ = !q || w.word.includes(q) || w.meanings.some(m => m.vi.toLowerCase().includes(q));
+    const matchL = level === 'all' || w.level === level;
+    const matchP = pos === 'all' || w.meanings.some(m => m.pos === pos);
+    return matchQ && matchL && matchP;
+  });
+  renderCards(currentFiltered);
+  if (document.getElementById('btnFlash').classList.contains('active')) loadFlashcard();
+}
+
+function setMode(mode) {
+  const grid = document.getElementById('wordGrid');
+  const flash = document.getElementById('flashcardMode');
+  const empty = document.getElementById('emptyState');
+  if (mode === 'grid') {
+    grid.classList.remove('hidden');
+    flash.classList.remove('active');
+    document.getElementById('btnGrid').classList.add('active');
+    document.getElementById('btnFlash').classList.remove('active');
+    renderCards(currentFiltered);
+  } else {
+    grid.classList.add('hidden');
+    empty.style.display = 'none';
+    flash.classList.add('active');
+    document.getElementById('btnFlash').classList.add('active');
+    document.getElementById('btnGrid').classList.remove('active');
+    fcIndex = 0;
+    loadFlashcard();
+  }
+}
+
+function loadFlashcard() {
+  if (currentFiltered.length === 0) return;
+  const w = currentFiltered[fcIndex];
+  fcRevealed = false;
+  document.getElementById('fcWord').textContent = w.word;
+  document.getElementById('fcPhonetic').textContent = w.phonetic;
+  document.getElementById('fcLevel').innerHTML = `<span class="level-badge ${w.level === 'C1' ? 'level-c1' : 'level-c2'}">${w.level}</span>`;
+  document.getElementById('fcReveal').classList.remove('show');
+  document.getElementById('fcNav').style.display = 'none';
+  document.getElementById('fcHint').style.display = 'block';
+  document.getElementById('fcProgress').textContent = `Từ ${fcIndex + 1} / ${currentFiltered.length}`;
+  const m = w.meanings[0];
+  document.getElementById('fcVi').textContent = m.vi;
+  document.getElementById('fcExample').textContent = m.examples[0].en.replace(/<[^>]+>/g, '');
+}
+
+function revealCard() {
+  if (fcRevealed) return;
+  fcRevealed = true;
+  document.getElementById('fcReveal').classList.add('show');
+  document.getElementById('fcNav').style.display = 'flex';
+  document.getElementById('fcHint').style.display = 'none';
+}
+
+function markCard(result) {
+  const w = currentFiltered[fcIndex];
+  if (result === 'know') statusMap[w.word] = 'mastered';
+  else statusMap[w.word] = 'studying';
+  nextCard();
+}
+
+function nextCard() {
+  if (fcIndex < currentFiltered.length - 1) { fcIndex++; loadFlashcard(); }
+  else { fcIndex = 0; loadFlashcard(); }
+}
+
+function prevCard() {
+  if (fcIndex > 0) { fcIndex--; loadFlashcard(); }
+}
+
+renderCards(words);
+</script>
+</body>
+</html>
